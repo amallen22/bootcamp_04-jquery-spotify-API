@@ -1,13 +1,13 @@
-var token = 'BQAz61MwAg1m0p3ecTFYea6I5X758hQUzYFXmocU_-ml7SK3QNBA1j_NezTciOu7UAufKBGmpspR_g49xRBAqiKYR39xSE1kFqAODJnqL-HSC_mYbmBXsG4ktS46GNMAt0jY-fur3dgpep0'
+var token = 'BQBwhu1HIIetIP_mhvqPxLn--5H6lY35TlkRjKEMsmZt8eXulSF4XdCKJ2-_-KFK_PCAfHl_wIHk6dMHLFvBe_ZyRb58txtUiqLdQDqyBCKKmT6Tl6wg7ysAPXJZEowYQLIAKTZf2f-tM4Y'
 
 $('#searchMusic button').on('click', function (e) {
   e.preventDefault()
 
   var querySearch = $('#searchMusic input').val()
-  console.log(querySearch)
+  // console.log(querySearch)
 
   var urlSearch = 'https://api.spotify.com/v1/search?type=artist&query=' + querySearch
-  console.log(urlSearch)
+  // console.log(urlSearch)
 
   $.ajax({
     url: urlSearch,
@@ -28,6 +28,7 @@ $('#searchMusic button').on('click', function (e) {
 	  $('#searchSelect').html(sArtist)
   })
 })
+
 $('#searchSelect').on('change', function (e) {
   e.preventDefault()
 
@@ -43,6 +44,37 @@ $('#searchSelect').on('change', function (e) {
   }
   })
   .then(function (oArtistAlbum) {
-  	console.log(oArtistAlbum)
+  	var albumArtistName = oArtistAlbum.items.map(function (albumName) {
+    	return '<option value="' + albumName.id + '">' + albumName.name + '</option>'
+  	}).join('')
+  	// console.log(albumArtistName)
+
+  	$('#albumSelect').html(albumArtistName)
   })
 })
+
+$('#albumSelect').on('change', function () {
+  var albumId = $(this).val()
+  var urlAlbum = 'https://api.spotify.com/v1/albums/' + albumId + '/tracks'
+
+  $.ajax({
+  	url: urlAlbum,
+  	headers: {
+	  Authorization: 'Bearer ' + token
+  }
+  })
+  .then(function (oTracks) {
+  	// console.log(oTracks)
+  	var trackName = oTracks.items.map(function (tracks) {
+  		// console.log(tracks)
+  		return '<li><a href="' + tracks.preview_url + '">' + tracks.name + '</a></li>'
+  	}).join('')
+
+  	$('#trackSelect').html(trackName)
+  })
+})
+
+// .preview_url
+// $('#trackSelect').on('change', function () {
+
+// })
