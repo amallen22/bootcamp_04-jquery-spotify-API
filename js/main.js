@@ -1,0 +1,48 @@
+var token = 'BQAz61MwAg1m0p3ecTFYea6I5X758hQUzYFXmocU_-ml7SK3QNBA1j_NezTciOu7UAufKBGmpspR_g49xRBAqiKYR39xSE1kFqAODJnqL-HSC_mYbmBXsG4ktS46GNMAt0jY-fur3dgpep0'
+
+$('#searchMusic button').on('click', function (e) {
+  e.preventDefault()
+
+  var querySearch = $('#searchMusic input').val()
+  console.log(querySearch)
+
+  var urlSearch = 'https://api.spotify.com/v1/search?type=artist&query=' + querySearch
+  console.log(urlSearch)
+
+  $.ajax({
+    url: urlSearch,
+
+    // Para usar APIs de contenido no público (ej. Spotify) tenemos que añadir el tag 'headers:' en nuestra petición AJAX
+    headers: {
+      Authorization: 'Bearer ' + token
+    }
+  })
+  .then(function (oSearch) {
+  // console.log(oSearch.artists.items)
+
+	  var sArtist = oSearch.artists.items.map(function (aArtist) {
+	  		return '<option value="' + aArtist.id + '">' + aArtist.name + '</option>'
+	  }).join('')
+	  // console.log(sArtist)
+
+	  $('#searchSelect').html(sArtist)
+  })
+})
+$('#searchSelect').on('change', function (e) {
+  e.preventDefault()
+
+  var artistId = $(this).val()
+
+  // console.log(artistId)
+  var urlArtistAlbum = 'https://api.spotify.com/v1/artists/' + artistId + '/albums'
+
+  $.ajax({
+  	url: urlArtistAlbum,
+  	headers: {
+    Authorization: 'Bearer ' + token
+  }
+  })
+  .then(function (oArtistAlbum) {
+  	console.log(oArtistAlbum)
+  })
+})
