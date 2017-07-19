@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jquery spotify API</title>
+	<link rel="stylesheet" href="/bootstrap-3-3-7/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<form id="searchMusic" class="navbar-form pull-right">
+					<input class="input-lg" type="text" style="width: 200px;" value="beck" />
+					<button type="submit" class="btn btn-default">Submit</button>
+					<div class="form-group hidden">
+                        <select class="input-lg" id="searchSelect"></select>
+                    </div>
+                    <div class="form-group class hidden">
+                        <select class="input-lg" id="albumSelect"></select>
+                    </div>
+				</form>
+                <ul id="trackSelect"></ul>
+			</div>
+		</div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" /></script>
+<script src="bootstrap-3-3-7/js/bootstrap.min.js" /></script>
+
+<script src="js/main2.js"></script>
+</body>
+</html>
